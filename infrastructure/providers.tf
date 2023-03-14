@@ -13,4 +13,5 @@ terraform {
 
 provider "google" {
   project = var.project
+  zone    = local.zone
 }
