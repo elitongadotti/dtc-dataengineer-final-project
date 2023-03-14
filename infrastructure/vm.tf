@@ -2,7 +2,7 @@
 
 resource "google_compute_instance" "prefect_vm" {
   name                = "prefect-vm"
-  machine_type        = "e2-medium"
+  machine_type        = "n1-standard-2"
   project             = var.project
   deletion_protection = false
 
