@@ -1,0 +1,20 @@
+name: Deploy
+
+on:
+    push:
+        branches:
+            - develop
+defaults:
+    run:
+        shell: bash
+jobs:
+    deploy:
+        name: Deploy Terraform infrastructure
+        uses: ./.github/workflows/tf_apply.yml
+        with:
+            #environment: "prod"
+            tf_state_bucket: ${{ vars.STATE_BUCKET }}
+            #service_account: "?"
+        secrets:
+            project_id: ${{ secrets.GCP_PROJECT_ID }}
+            service_account_key: ${{ secrets.GCP_SERVICE_ACCOUNT }}

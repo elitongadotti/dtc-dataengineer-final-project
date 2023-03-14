@@ -10,3 +10,5 @@ The project will cover following tools:
 - Docker
 
 Dataset used: https://www2.camara.leg.br/transparencia/cota-para-exercicio-da-atividade-parlamentar/dados-abertos-cota-parlamentar
+
+![Architecture overview](./assets/architecture_v1.png "Architecture overview - v.1")
