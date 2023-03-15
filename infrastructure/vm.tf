@@ -1,11 +1,12 @@
 
 
 resource "google_compute_instance" "prefect_vm" {
-  name                = "prefect-vm"
-  machine_type        = "n1-standard-2"
-  project             = var.project
-  deletion_protection = false
-  enable_display      = true
+  name                      = "prefect-vm"
+  machine_type              = "n1-standard-2"
+  project                   = var.project
+  deletion_protection       = false
+  enable_display            = true
+  allow_stopping_for_update = true
 
   tags = ["datatalksclub-final-project"]
 
