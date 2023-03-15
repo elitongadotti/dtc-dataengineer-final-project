@@ -1,0 +1,48 @@
+# https://github.com/flavienbwk/prefect-docker-compose/tree/main/server
+version: "3.7"
+services:
+
+  postgres:
+    command:
+      - postgres
+      - -c
+      - max_connections=150
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    volumes:
+        - postgres:/var/lib/postgresql/data
+    healthcheck:
+      interval: 10s
+      retries: 60
+      start_period: 2s
+      test: pg_isready -q -d $${POSTGRES_DB} -U $${POSTGRES_USER} | grep "accepting connections" || exit 1
+      timeout: 2s
+    image: postgres:14
+    restart: always
+    
+  orion:
+    restart: always
+    build: .
+
+    command: prefect orion start
+    ports:
+      - 4200:4200
+    depends_on:
+      postgres:
+        condition: service_started
+    volumes:
+      - prefect_data:/root/.prefect
+      - prefect_flows:/flows
+    environment:
+      PREFECT_ORION_API_HOST: 0.0.0.0
+      PREFECT_ORION_DATABASE_CONNECTION_URL: ${DB_CONNECTION_URL}
+      PREFECT_ORION_ANALYTICS_ENABLED: "false"
+      PREFECT_LOGGING_SERVER_LEVEL: WARNING
+      PREFECT_API_URL: ${PREFECT_API_URL}
+
+volumes:
+  postgres:
+  prefect_data:
+  prefect_flows:

@@ -30,7 +30,14 @@ resource "google_compute_instance" "prefect_vm" {
   }
 
 
-  metadata_startup_script = "echo \"${var.sa_key}\" > ~/default-sa.json"
+  # metadata_startup_script = <<EOT
+  #   echo "this is a test"
+  #   echo \"${var.sa_key}\" > ~/default-sa.json
+
+  #   file(../scripts/bootstrap.sh)
+  # EOT
+
+  metadata_startup_script = file("../scripts/bootstrap.sh")
 
   #   service_account {
   #     # Google recommends custom service accounts that have cloud-platform scope and permissions granted via IAM Roles.
