@@ -7,7 +7,7 @@ resource "google_compute_instance" "prefect_vm" {
   deletion_protection = false
   enable_display      = true
 
-  tags = ["datatalks.club-final-project"]
+  tags = ["datatalksclub-final-project"]
 
   boot_disk {
     initialize_params {
