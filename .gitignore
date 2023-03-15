@@ -131,3 +131,4 @@ dmypy.json
 # others
 infrastructure/.terraform/
 .terraform.**
+scripts/scripts.sh
