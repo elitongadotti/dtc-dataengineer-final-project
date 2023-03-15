@@ -12,3 +12,8 @@ variable "project" {
   type        = string
   description = "Project id"
 }
+
+variable "tf_state_bucket" {
+  type        = string
+  description = "Bucket where tf state is placed"
+}

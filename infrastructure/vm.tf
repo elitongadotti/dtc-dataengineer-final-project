@@ -5,8 +5,9 @@ resource "google_compute_instance" "prefect_vm" {
   machine_type        = "n1-standard-2"
   project             = var.project
   deletion_protection = false
+  enable_display      = true
 
-  tags = ["datatalksclub", "finalproject"]
+  tags = ["datatalks.club-final-project"]
 
   boot_disk {
     initialize_params {
