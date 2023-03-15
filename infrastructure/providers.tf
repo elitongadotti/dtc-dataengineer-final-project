@@ -7,7 +7,7 @@ terraform {
     }
   }
   backend "gcs" {
-    bucket = var.tf_state_bucket
+    bucket = "terraform-tfstate-dtc-de-project"
   }
 }
 

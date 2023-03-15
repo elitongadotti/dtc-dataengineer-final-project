@@ -1,15 +1,15 @@
 name: Deployment
 on:
     workflow_call:
-        inputs:
+        #inputs:
             #environment:
             #    description: Target env.
             #    required: true
             #    type: string
-            tf_state_bucket:
-                description: Terraform state bucket
-                required: true
-                type: string
+            #tf_state_bucket:
+            #    description: Terraform state bucket
+            #    required: true
+            #    type: string
             #service_account: 
             #    description: SA email
             #    required: true
@@ -26,7 +26,7 @@ jobs:
         runs-on: ubuntu-latest
         environment: ${{ inputs.environment }}
         env:
-            TF_VAR_tf_state_bucket: ${{ inputs.tf_state_bucket }}
+            #TF_VAR_tf_state_bucket: ${{ inputs.tf_state_bucket }}
             TF_VAR_project: ${{ secrets.project_id }}
             TF_VAR_sa_key: ${{ secrets.service_account_key }}
         defaults:

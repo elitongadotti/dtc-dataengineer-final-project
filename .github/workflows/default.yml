@@ -11,9 +11,9 @@ jobs:
     deploy:
         name: Deploy Terraform infrastructure
         uses: ./.github/workflows/tf_apply.yml
-        with:
+        #with:
             #environment: "prod"
-            tf_state_bucket: ${{ vars.STATE_BUCKET }}
+            #tf_state_bucket: ${{ vars.STATE_BUCKET }}
             #service_account: "?"
         secrets:
             project_id: ${{ secrets.GCP_PROJECT_ID }}
