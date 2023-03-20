@@ -24,4 +24,12 @@ echo \
 sudo apt-get update
 sudo apt-get -y install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
 
+# Setup RDP protocol to connect to Ubuntu instance: https://stackoverflow.com/a/65374756
+sudo apt-get -y install tasksel
+sudo tasksel install ubuntu-desktop
+sudo systemctl set-default graphical.target
+sudo apt install xrdp
+sudo systemctl enable xrdp
+# has to be interactive -- sudo passwd root 
+
 echo "End of bootstrap"

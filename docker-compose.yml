@@ -16,17 +16,24 @@ services:
     healthcheck:
       interval: 10s
       retries: 60
-      start_period: 2s
-      test: pg_isready -q -d $${POSTGRES_DB} -U $${POSTGRES_USER} | grep "accepting connections" || exit 1
-      timeout: 2s
+      start_period: 5s
+      test: pg_isready -d $${POSTGRES_DB} -U $${POSTGRES_USER} -h localhost | grep "accepting connections" || exit 1
+      timeout: 5s
     image: postgres:14
     restart: always
-    
+    #ports:
+    #  - 5432:5432
+
+    expose:
+      - 5432
   orion:
     restart: always
     build: .
-
     command: prefect orion start
+      #- |
+      #- prefect orion start
+      #- prefect config set PREFECT_API_URL=http://127.0.0.1:4200/api
+      #- prefect agent start -q "default"
     ports:
       - 4200:4200
     depends_on:
