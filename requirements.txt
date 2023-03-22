@@ -1,2 +1,5 @@
-pandas
+pandas==1.5.2
 psycopg2-binary==2.9.3
+prefect-gcp[cloud_storage]==0.2.4
+protobuf==4.21.11
+pyarrow==10.0.1

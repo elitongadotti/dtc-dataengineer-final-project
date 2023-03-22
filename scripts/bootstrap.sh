@@ -32,4 +32,9 @@ sudo apt install xrdp
 sudo systemctl enable xrdp
 # has to be interactive -- sudo passwd root 
 
+# setup running docker without sudo - https://github.com/sindresorhus/guides/blob/main/docker-without-sudo.md
+sudo groupadd docker
+sudo gpasswd -a $USER docker
+sudo service docker restart
+
 echo "End of bootstrap"
