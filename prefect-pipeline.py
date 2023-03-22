@@ -6,21 +6,29 @@
 # use this data to plot graphs in looker studio
 
 from prefect import flow, task
-from prefect_gcp.cloud_storage import GcsBucket
-from random import randint
-from prefect.tasks import task_input_hash
-from datetime import timedelta
-import os
+import pandas as pd
+from prefect_gcp import GcpCredentials
 
 @task(log_prints=True)
-def gather_data():
-    pass
+def gather_data(year: int):
+    filename = "Ano-{year}.csv.zip"
+    df = pd.read_csv(f"https://www.camara.leg.br/cotas/{filename}", compression="zip", sep=";")
+    return df
 
 @flow(log_prints=True)
-def load_into_bq():
-    pass
+def load_into_bq(df: pd.DataFrame, table, gcs_block, project_id):
+    block = GcpCredentials.load(gcs_block)
+
+    df.to_gbq(
+        destination_table=table,
+        project_id=project_id,
+        credentials=block.get_credentials_from_service_account(),
+        chunksize=500_000,
+        if_exists="append"
+    )
+    print(f"Data loaded to big query, table: {table}")
 
 @flow()
 def load_data():
-    print("Loading data from source to big query")
-    pass
+    load_into_bq(gather_data(2017))
+    print("End of flow!")
