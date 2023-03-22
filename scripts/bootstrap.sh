@@ -28,7 +28,7 @@ sudo apt-get -y install docker-ce docker-ce-cli containerd.io docker-buildx-plug
 sudo apt-get -y install tasksel
 sudo tasksel install ubuntu-desktop
 sudo systemctl set-default graphical.target
-sudo apt install xrdp
+sudo apt-get -y install xrdp
 sudo systemctl enable xrdp
 # has to be interactive -- sudo passwd root 
 

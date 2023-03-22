@@ -18,21 +18,16 @@ resource "google_bigquery_table" "cota_parlamentar_raw_data" {
     type = "MONTH"
   }
 
-  schema = <<EOF
-  [
-    {
-        "name": "permalink",
-        "type": "STRING",
-        "mode": "NULLABLE",
-        "description": "The Permalink"
-    },
-    {
-        "name": "state",
-        "type": "STRING",
-        "mode": "NULLABLE",
-        "description": "State where the head office is located"
-    }
-  ]
-  EOF
+  #   schema = <<EOF
+  #   [
+  #     {
+  #         "name": "col1",
+  #         "type": "STRING",
+  #         "mode": "NULLABLE",
+  #         "description": "The Permalink"
+  #     },
+  #     ...
+  #   ]
+  #   EOF
 
 }
