@@ -3,6 +3,7 @@ resource "google_bigquery_dataset" "cota_parlamentar_dataset" {
   friendly_name = "cota_parlamentar"
   description   = "Cota Parlamentar dataset"
   location      = local.region
+
   #   access {
   #     role          = "OWNER"
   #     user_by_email = "emailAddress:dtc-sa@dtc-de-375519.iam.gserviceaccount.com"
@@ -18,8 +19,8 @@ resource "google_bigquery_table" "cota_parlamentar_raw_data" {
     field = "datEmissao"
   }
 
-  clustering = ["sgPartido"]
-
+  clustering          = ["sgPartido"]
+  deletion_protection = false
   #   schema = <<EOF
   #   [
   #     {
