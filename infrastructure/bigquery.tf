@@ -10,6 +10,7 @@ resource "google_bigquery_dataset" "cota_parlamentar_dataset" {
   #   }
 }
 
+# TODO: define a schema here to able me to partition and cluster the table
 resource "google_bigquery_table" "cota_parlamentar_raw_data" {
   dataset_id = google_bigquery_dataset.cota_parlamentar_dataset.dataset_id
   table_id   = "cota_parlamentar_raw"
@@ -19,7 +20,7 @@ resource "google_bigquery_table" "cota_parlamentar_raw_data" {
     #field = "datEmissao"
   }
 
-  clustering          = ["sgPartido"]
+  #clustering          = ["sgPartido"]
   deletion_protection = false
 
   #   schema = <<EOF
