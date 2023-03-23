@@ -15,8 +15,8 @@ resource "google_bigquery_table" "cota_parlamentar_raw_data" {
   table_id   = "cota_parlamentar_raw"
 
   time_partitioning {
-    type  = "MONTH"
-    field = "datEmissao"
+    type = "MONTH"
+    #field = "datEmissao"
   }
 
   clustering          = ["sgPartido"]
