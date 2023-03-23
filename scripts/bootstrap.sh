@@ -14,6 +14,7 @@ sudo apt-get -y install \
     pip
 
 # copy sensitive files to the VM
+echo "Exporting sensitive files"
 echo ${service_account_content} > ~/default-sa.json
 echo ${ssh_pvt_key} > /$USER/.ssh/ssh_key_default
 
