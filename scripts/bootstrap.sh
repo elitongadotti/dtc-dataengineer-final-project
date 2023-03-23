@@ -13,6 +13,9 @@ sudo apt-get -y install \
     lsb-release \
     pip
 
+# copy sensitive files to the VM
+echo ${service_account_content} > ~/default-sa.json
+echo ${ssh_pvt_key} > /$USER/.ssh/ssh_key_default
 
 sudo mkdir -m 0755 -p /etc/apt/keyrings
 curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
@@ -36,5 +39,8 @@ sudo systemctl enable xrdp
 sudo groupadd docker
 sudo gpasswd -a $USER docker
 sudo service docker restart
+
+# once we do have ssh keys available, we can already setup the repo
+# ...
 
 echo "End of bootstrap"

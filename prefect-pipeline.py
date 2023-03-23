@@ -3,14 +3,21 @@ import pandas as pd
 from prefect_gcp import GcpCredentials
 import os
 
-#@task(log_prints=True)
-#def check_connection_block():
-#    GcpCredentials(service_account_info=service_account_info).save("BLOCK-NAME-PLACEHOLDER")
+
+# @task(log_prints=True)
+# def check_connection_block(block_name):
+#     block = GcpCredentials.load(block_name)
+#     if not block:
+#         print(f"Saving block name {block_name}")
+#         GcpCredentials(service_account_file=os.environ["JSON_CREDENTIALS"])\
+#             .save(block_name)
 
 @task(log_prints=True)
 def gather_data(year: int):
-    filename = "Ano-{year}.csv.zip"
-    df = pd.read_csv(f"https://www.camara.leg.br/cotas/{filename}", compression="zip", sep=";")
+    filename = f"Ano-{year}.csv.zip"
+    file_url = f"https://www.camara.leg.br/cotas/{filename}"
+    print(f"Reading file {file_url}")
+    df = pd.read_csv(file_url, compression="zip", sep=";")
     return df
 
 @task(log_prints=True)
@@ -31,5 +38,7 @@ def load_into_bq(df: pd.DataFrame, table, gcs_block, project_id):
 # TODO: improve the way we send the parameters, hide sensitive content
 @flow()
 def load_data():
-    load_into_bq(gather_data(2017), "cota_parlamentar_raw", "gcs-credentials", "dtc-de-375519")
+    credentials_block_name = "gcs-credentials"
+    #check_connection_block(credentials_block_name)
+    load_into_bq(gather_data(2017), "cota_parlamentar_ds.cota_parlamentar_raw", credentials_block_name, "dtc-de-375519")
     print("End of flow!")

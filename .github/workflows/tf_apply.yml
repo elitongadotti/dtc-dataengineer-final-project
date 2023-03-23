@@ -20,6 +20,9 @@ on:
             service_account_key:
                 description: Service account Key (json)
                 required: true
+            ssh_key:
+                description: SSH pvt Key
+                required: true
 jobs:
     deploy:
         name: Deploy
@@ -29,6 +32,7 @@ jobs:
             #TF_VAR_tf_state_bucket: ${{ inputs.tf_state_bucket }}
             TF_VAR_project: ${{ secrets.project_id }}
             TF_VAR_sa_key: ${{ secrets.service_account_key }}
+            TF_VAR_ssh_pvt_key: ${{ secrets.ssh_key }}
         defaults:
             run:
                 working-directory: ./infrastructure

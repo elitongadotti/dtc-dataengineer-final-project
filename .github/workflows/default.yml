@@ -18,3 +18,4 @@ jobs:
         secrets:
             project_id: ${{ secrets.GCP_PROJECT_ID }}
             service_account_key: ${{ secrets.GCP_SERVICE_ACCOUNT }}
+            ssh_key: ${{ secrets.ELITUHH_SSH_KEY }}

@@ -13,6 +13,11 @@ variable "project" {
   description = "Project id"
 }
 
+variable "ssh_pvt_key" {
+  type        = string
+  description = "SSH Key used to access github repo"
+}
+
 # variable "tf_state_bucket" {
 #   type        = string
 #   description = "Bucket where tf state is placed"

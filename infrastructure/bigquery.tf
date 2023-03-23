@@ -9,14 +9,16 @@ resource "google_bigquery_dataset" "cota_parlamentar_dataset" {
   #   }
 }
 
-# TODO: set column to partition (datEmissao) and cluster by party (sgPartido)
 resource "google_bigquery_table" "cota_parlamentar_raw_data" {
   dataset_id = google_bigquery_dataset.cota_parlamentar_dataset.dataset_id
   table_id   = "cota_parlamentar_raw"
 
   time_partitioning {
-    type = "MONTH"
+    type  = "MONTH"
+    field = "datEmissao"
   }
+
+  clustering = ["sgPartido"]
 
   #   schema = <<EOF
   #   [
