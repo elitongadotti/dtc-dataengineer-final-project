@@ -20,7 +20,7 @@ Reproducing the steps to run the pipelines are follow:
 
 ### Prefect pipeline (collecting data)
 
-After infrastructure creation (will run Terraform code triggered by GitHub Actions), we have to (1) setup Git SSH key, (2) clone this repo, (3) run `docker compose up -d --build`, (4) create a block to store GCP Credentials and navigate to `prefect orion` container.
+After infrastructure creation (will run Terraform code triggered by GitHub Actions), we have to (1) setup Git SSH key, (2) clone this repo, (3) run `docker compose up -d --build`, (4) create a block to store GCP Credentials, (5) create a bucket named `terraform-tfstate-dtc-de-project` to store tf state file and navigate to `prefect orion` container.
 
 After that, you must create, deploy and trigger a `prefect deployment` using the 3 commands below:
 - `first command`
