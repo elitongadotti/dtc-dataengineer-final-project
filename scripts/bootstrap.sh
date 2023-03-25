@@ -49,5 +49,9 @@ Host github.com
   UseKeychain yes
   IdentityFile ~/.ss/ssh_key
 " >> ~/.ssh/config
+export GIT_URL=git@github.com:1eliton/dtc-de-project.git
+cd / && git clone $GIT_URL && cd ./dtc-de-project
+
+#echo "Creating containers..."
 
 echo "End of bootstrap"
