@@ -15,8 +15,9 @@ sudo apt-get -y install \
 
 # copy sensitive files from terraform to VM
 echo "Exporting sensitive files"
+export SSHKEY_PATH="~/.ssh/ssh_key_default"
 echo "${service_account_content}" > ~/default-sa.json
-echo "${ssh_pvt_key}" > ~/.ssh/ssh_key_default
+echo "${ssh_pvt_key}" > $SSHKEY_PATH
 
 sudo mkdir -m 0755 -p /etc/apt/keyrings
 curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
@@ -42,6 +43,12 @@ sudo gpasswd -a $USER docker
 sudo service docker restart
 
 # once we do have ssh keys available, we can already setup the repo
-# ...
+echo "Preparing SSH Key"
+echo "
+Host github.com
+  AddKeysToAgent yes
+  UseKeychain yes
+  IdentityFile $SSHKEY_PATH
+" >> ~/.ssh/config
 
 echo "End of bootstrap"
