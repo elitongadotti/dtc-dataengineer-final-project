@@ -20,6 +20,8 @@ In order to run prepare the environment for the pipelines that will be executed,
 1. Github environment variables - will be used when running Actions (CD pipeline)
 2. ...
 
+All prepared, now we can dive into pipelines settings.
+
 ### Prefect pipeline (collecting data)
 
 After infrastructure creation (will run Terraform code triggered by GitHub Actions), we have to (1) setup Git SSH key, (2) clone this repo, (3) run `docker compose up -d --build`, (4) create a block to store GCP Credentials, (5) create a bucket named `terraform-tfstate-dtc-de-project` to store tf state file, (6) define your `.env` file and navigate to `prefect orion` container.
@@ -38,4 +40,4 @@ Done, all the data is already in BigTable. Now we need to run the cleaning proce
 
 ### dbt pipeline (cleaning data)
 ...
-After creating your own
+We are using dbt cloud for the project. Said that, you must create your dbt cloud account, setup up a connection to BigQuery and configure github to sync this repo to dbt cloud. [Here](https://docs.getdbt.com/docs/cloud/connect-data-platform/connect-your-database#connecting-to-bigquery) are some instructions on it.
