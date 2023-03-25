@@ -15,7 +15,7 @@ sudo apt-get -y install \
 
 # copy sensitive files from terraform to VM
 echo "Exporting sensitive files"
-export SSHKEY_PATH="~/.ssh/ssh_key_default"
+export SSHKEY_PATH="~/ssh_key_default"
 echo "${service_account_content}" > ~/default-sa.json
 echo "${ssh_pvt_key}" > $SSHKEY_PATH
 
