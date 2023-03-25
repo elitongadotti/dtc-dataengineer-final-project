@@ -16,7 +16,7 @@ sudo apt-get -y install \
 # copy sensitive files from terraform to VM
 echo "Exporting sensitive files"
 echo "${service_account_content}" > ~/default-sa.json
-echo "${ssh_pvt_key}" > ~/.ss/ssh_key
+echo "${ssh_pvt_key}" > ~/.ssh/ssh_key
 
 sudo mkdir -m 0755 -p /etc/apt/keyrings
 curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
@@ -47,10 +47,10 @@ echo "
 Host github.com
   AddKeysToAgent yes
   UseKeychain yes
-  IdentityFile ~/.ss/ssh_key
+  IdentityFile ~/.ssh/ssh_key
 " >> ~/.ssh/config
 export GIT_URL=git@github.com:1eliton/dtc-de-project.git
-cd / && git clone $GIT_URL && cd ./dtc-de-project
+cd ~ && git clone $GIT_URL && cd ./dtc-de-project
 
 #echo "Creating containers..."
 

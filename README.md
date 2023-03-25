@@ -16,7 +16,9 @@ Dataset used can be found [here](https://www2.camara.leg.br/transparencia/cota-p
 
 
 ## Reproducing:
-Reproducing the steps to run the pipelines are follow:
+In order to run prepare the environment for the pipelines that will be executed, you have to setup beforehand:   
+1. Github environment variables - will be used when running Actions (CD pipeline)
+2. ...
 
 ### Prefect pipeline (collecting data)
 
@@ -36,3 +38,4 @@ Done, all the data is already in BigTable. Now we need to run the cleaning proce
 
 ### dbt pipeline (cleaning data)
 ...
+After creating your own
