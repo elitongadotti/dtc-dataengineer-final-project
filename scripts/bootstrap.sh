@@ -38,10 +38,10 @@ sudo systemctl enable xrdp
 # has to be interactive -- sudo passwd root 
 
 # setup running docker without sudo - https://github.com/sindresorhus/guides/blob/main/docker-without-sudo.md
-echo "Configuring docker..."
-sudo groupadd docker
-sudo gpasswd -a $USER docker
-sudo service docker restart
+# echo "Configuring docker..."
+# sudo groupadd docker
+# sudo gpasswd -a $USER docker
+# sudo service docker restart
 
 # once we do have ssh keys available, we can already setup the repo
 echo "Preparing SSH Key"
@@ -51,9 +51,16 @@ Host github.com
   UseKeychain yes
   IdentityFile ~/.ssh/ssh_key
 " >> ~/.ssh/config
-export GIT_URL=git@github.com:1eliton/dtc-de-project.git
-cd ~ && git clone $GIT_URL && cd ./dtc-de-project
 
-#echo "Creating containers..."
+chmod 600 ~/.ssh/ssh_key
+export GIT_URL=git@github.com:1eliton/dtc-de-project.git
+eval `ssh-agent` && ssh-add ~/.ssh/ssh_key
+cd ~ && git clone $GIT_URL && cd ./dtc-de-project
+# TODO: remove the line below
+git checkout develop
+
+echo "Creating containers..."
+# TODO: touch .env file before run line below?
+docker compose up -d --build
 
 echo "End of bootstrap"

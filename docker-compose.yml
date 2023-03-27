@@ -52,4 +52,4 @@ services:
 volumes:
   postgres:
   prefect_data:
-  prefect_flows:
+  prefect_flows:~/dtc-de-project/flows/

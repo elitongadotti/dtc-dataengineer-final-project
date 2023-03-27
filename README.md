@@ -40,4 +40,5 @@ Done, all the data is already in BigTable. Now we need to run the cleaning proce
 
 ### dbt pipeline (cleaning data)
 ...
-We are using dbt cloud for the project. Said that, you must create your dbt cloud account, setup up a connection to BigQuery and configure github to sync this repo to dbt cloud. [Here](https://docs.getdbt.com/docs/cloud/connect-data-platform/connect-your-database#connecting-to-bigquery) are some instructions on it.
+We are using dbt cloud for the project. Said that, you must create your dbt cloud account, setup up a connection to BigQuery and configure github to sync this repo to dbt cloud. [Here](https://docs.getdbt.com/docs/cloud/connect-data-platform/connect-your-database#connecting-to-bigquery) are some instructions on this.
+
