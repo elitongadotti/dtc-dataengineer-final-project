@@ -1,0 +1,15 @@
+version: 2
+
+sources:
+  - name: staging
+    database: dtc-de-375519 # bq project
+    schema: cota_parlamentar_ds # bq dataset
+
+    tables: 
+      - name: cota_parlamentar_raw
+      #- name: cota_parlamentar_gold
+
+models:
+    - name: stg_cota_parlamentar_raw
+      description: >
+        Data from parliamentary quotas (cotas parlamentares) in a raw state
