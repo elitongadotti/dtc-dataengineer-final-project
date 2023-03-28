@@ -26,16 +26,16 @@ resource "google_bigquery_table" "cota_parlamentar_raw_data" {
 
 resource "google_bigquery_table" "cota_parlamentar_by_state_party_date" {
   dataset_id = google_bigquery_dataset.cota_parlamentar_dataset.dataset_id
-  table_id = "cota_parlamentar_by_state_party_date"
+  table_id   = "cota_parlamentar_by_state_party_date"
 
   time_partitioning {
-    type = "MONTH"
+    type  = "MONTH"
     field = "issue_date"
   }
 
-  clustering = ["party", "state"]
+  clustering          = ["party", "state"]
   deletion_protection = false
-  
+
   schema = <<EOF
   [
     {
