@@ -25,10 +25,10 @@ resource "google_bigquery_table" "cota_parlamentar_raw_data" {
 }
 
 resource "google_bigquery_table" "cota_parlamentar_gold" {
-  dataset_id = google_bigquery_dataset.cota_parlamentar_dataset.dataset_id
-  table_id   = "cota_parlamentar_gold"
-
-  schema = <<EOF
+  dataset_id          = google_bigquery_dataset.cota_parlamentar_dataset.dataset_id
+  table_id            = "cota_parlamentar_gold"
+  deletion_protection = false
+  schema              = <<EOF
   [
     {
       "name": "state",
