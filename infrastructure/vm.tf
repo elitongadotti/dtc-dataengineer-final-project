@@ -33,6 +33,7 @@ resource "google_compute_instance" "prefect_vm" {
   metadata_startup_script = templatefile("../scripts/bootstrap.sh", {
     service_account_content = "${var.sa_key}"
     ssh_pvt_key             = var.ssh_pvt_key
+    project_id              = var.project
   })
 
 }

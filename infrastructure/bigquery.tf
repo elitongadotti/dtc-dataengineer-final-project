@@ -24,6 +24,40 @@ resource "google_bigquery_table" "cota_parlamentar_raw_data" {
   deletion_protection = false
 }
 
+resource "google_bigquery_table" "cota_parlamentar_gold" {
+  dataset_id = google_bigquery_dataset.cota_parlamentar_dataset.dataset_id
+  table_id   = "cota_parlamentar_gold"
+
+  schema = <<EOF
+  [
+    {
+      "name": "state",
+      "type": "STRING"
+    },
+    {
+      "name": "party",
+      "type": "STRING"
+    },
+    {
+      "name": "issue_date",
+      "type": "DATE"
+    },
+    {
+      "name": "restitution_value",
+      "type": "FLOAT"
+    },
+    {
+      "name": "net_value",
+      "type": "FLOAT"
+    },
+    {
+      "name": "bill_description",
+      "type": "STRING"
+    }
+  ]
+  EOF
+}
+
 resource "google_bigquery_table" "cota_parlamentar_by_state_party_date" {
   dataset_id = google_bigquery_dataset.cota_parlamentar_dataset.dataset_id
   table_id   = "cota_parlamentar_by_state_party_date"

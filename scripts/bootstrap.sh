@@ -45,12 +45,10 @@ sudo apt-get -y install docker-ce docker-ce-cli containerd.io docker-buildx-plug
 
 # once we do have ssh keys available, we can already setup the repo
 echo "Preparing SSH Key"
-# echo "
-# Host github.com
-#   AddKeysToAgent yes
-#   UseKeychain yes
-#   IdentityFile ~/.ssh/ssh_key
-# " >> ~/.ssh/config
+echo "
+Host github.com
+  StrictHostKeyChecking no
+" >> ~/.ssh/config
 
 chmod 600 ~/.ssh/ssh_key
 export GIT_URL=git@github.com:1eliton/dtc-de-project.git
