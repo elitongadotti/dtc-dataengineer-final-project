@@ -15,8 +15,9 @@ sudo apt-get -y install \
 
 # copy sensitive files from terraform to VM
 echo "Exporting sensitive files"
-echo "${service_account_content}" > ~/default-sa.json
+#echo "${service_account_content}" > ~/default-sa.json
 echo "${ssh_pvt_key}" > ~/.ssh/ssh_key
+printf '%s' "${service_account_content}" > ~/default-sa.json
 
 sudo mkdir -m 0755 -p /etc/apt/keyrings
 curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
