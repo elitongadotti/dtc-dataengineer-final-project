@@ -22,16 +22,42 @@ resource "google_bigquery_table" "cota_parlamentar_raw_data" {
 
   #clustering          = ["sgPartido"]
   deletion_protection = false
+}
 
-  #   schema = <<EOF
-  #   [
-  #     {
-  #         "name": "col1",
-  #         "type": "STRING",
-  #         "mode": "NULLABLE",
-  #         "description": "The Permalink"
-  #     },
-  #     ...
-  #   ]
-  #   EOF
+resource "google_bigquery_table" "cota_parlamentar_by_state_party_date" {
+  dataset_id = google_bigquery_dataset.cota_parlamentar_dataset.dataset_id
+  table_id = "cota_parlamentar_by_state_party_date"
+
+  time_partitioning {
+    type = "MONTH"
+    field = "issue_date"
+  }
+
+  clustering = ["party", "state"]
+  deletion_protection = false
+  
+  schema = <<EOF
+  [
+    {
+      "name": "state",
+      "type": "STRING",
+    },
+    {
+      "name": "party",
+      "type": "STRING",
+    },
+    {
+      "name": "issue_date",
+      "type": "DATE",
+    },
+    {
+      "name": "restitution_total",
+      "type": "FLOAT",
+    },
+    {
+      "name": "net_total",
+      "type": "FLOAT",
+    }
+  ]
+  EOF
 }
