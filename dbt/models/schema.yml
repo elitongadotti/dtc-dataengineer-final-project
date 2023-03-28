@@ -7,13 +7,14 @@ sources:
 
     tables: 
       - name: cota_parlamentar_raw
+      - name: cota_parlamentar_gold
       
 
 models:
     - name: cota_parlamentar_gold
       description: >
         Data from parliamentary quotas (cotas parlamentares) sanitised and in raw state
-
-    - name: cota_parlamentar_by_state_party
+      
+    - name: cota_parlamentar_by_state_party_date
       description: >
         Parlametary quotas grouped by party and state

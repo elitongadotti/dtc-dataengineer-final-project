@@ -1,11 +1,11 @@
-{{ config(materialized='view') }}
+{{ config(materialized='table') }}
 
 select
     sgUF as state,
     sgPartido as party,
-    coalesce(vlrRestituicao, 0) restitution_value,
-    coalesce(vlrLiquido, 0) net_value,
-    datEmissao issue_date,
+    round(coalesce(vlrRestituicao, 0), 2) restitution_value,
+    round(coalesce(vlrLiquido, 0), 2) net_value,
+    cast(datEmissao as datetime) as issue_date,
     coalesce(txtDescricao, "") bill_description,
 
 from 
