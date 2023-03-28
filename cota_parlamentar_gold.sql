@@ -1,12 +1,12 @@
-{{ config(materialized='table') }}
+{{ config(materialized='view') }}
 
 select
     sgUF as state,
     sgPartido as party,
-    vlrRestituicao restitution_value,
-    vlrLiquido net_value,
+    coalesce(vlrRestituicao, 0) restitution_value,
+    coalesce(vlrLiquido, 0) net_value,
     datEmissao issue_date,
-    txtDescricao bill_description,
+    coalesce(txtDescricao, "") bill_description,
 
 from 
     {{ source('staging', 'cota_parlamentar_raw') }}
