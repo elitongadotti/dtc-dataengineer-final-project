@@ -40,23 +40,23 @@ resource "google_bigquery_table" "cota_parlamentar_by_state_party_date" {
   [
     {
       "name": "state",
-      "type": "STRING",
+      "type": "STRING"
     },
     {
       "name": "party",
-      "type": "STRING",
+      "type": "STRING"
     },
     {
       "name": "issue_date",
-      "type": "DATE",
+      "type": "DATE"
     },
     {
       "name": "restitution_total",
-      "type": "FLOAT",
+      "type": "FLOAT"
     },
     {
       "name": "net_total",
-      "type": "FLOAT",
+      "type": "FLOAT"
     }
   ]
   EOF
