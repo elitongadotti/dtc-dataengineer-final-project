@@ -67,12 +67,12 @@ prefect deployment run "load-data/Load raw data from camara.leg.br to BigQuery d
 prefect agent start -q 'default'
 ```
 
-After some minutes you will see that the workload executed successfully. The output message will be something like this:
+After some minutes you will see that the workload executed successfully by the Prefect Agent. The output message will be something similar to this:
+```
+20:04:53.395 | INFO    | prefect.infrastructure.process - Process 'fragrant-collie' exited cleanly.
 ```
 
-```
-
-Done, all the data is already in BigTable. Now we need to run the cleaning step.
+Done, all raw data is already in BigTable. Now we need to run the cleaning step.
 
 ## DBT pipeline (cleaning data)
 
