@@ -31,7 +31,7 @@ def load_into_bq(df: pd.DataFrame, table, gcs_block, project_id):
         credentials=block.get_credentials_from_service_account(),
         chunksize=500_000,
         if_exists="append",
-        table_schema=None # will infer
+        table_schema=None # will infer schema
     )
     print(f"Data loaded to big query, table: {table}")
 
@@ -40,5 +40,8 @@ def load_into_bq(df: pd.DataFrame, table, gcs_block, project_id):
 def load_data():
     credentials_block_name = "gcs-credentials"
     #check_connection_block(credentials_block_name)
-    load_into_bq(gather_data(2017), "cota_parlamentar_ds.cota_parlamentar_raw", credentials_block_name, "dtc-de-375519")
+    for year in range(2009, 2018):
+        print(f"Collecting and saving data from {year}")
+        load_into_bq(gather_data(year), "cota_parlamentar_ds.cota_parlamentar_raw", credentials_block_name, "dtc-de-375519")
+
     print("End of flow!")

@@ -18,7 +18,7 @@ Dataset used can be found [here](https://www2.camara.leg.br/transparencia/cota-p
 # Reproducing:
 In order to run prepare the environment for the pipelines that will be executed, you have to setup beforehand:   
 1. Github environment variables - will be used when running Actions (CD pipeline)
-2. ...
+2. Enable apis (TODO)
 
 All prepared, now we can dive into pipelines settings.
 
@@ -40,10 +40,20 @@ Done, all the data is already in BigTable. Now we need to run the cleaning proce
 
 ## DBT pipeline (cleaning data)
 
-We are using dbt cloud for the project. Said that, you must create your dbt cloud account, setup up a connection to BigQuery and configure github to sync this repo to dbt cloud. [Here](https://docs.getdbt.com/docs/cloud/connect-data-platform/connect-your-database#connecting-to-bigquery) are some instructions on this.
+We are using dbt cloud. Said that, you must create your dbt cloud account, setup up a connection to BigQuery and configure github to sync this repo to dbt cloud. 
+Also, don't forget configure a Project Subdirectory to reference `/dbt`, once it is **where the dbt files are located**.
 
-The dbt files are placed under `/dbt`. To build the tables with clean and aggregated data, you just need to run the following dbt command:
+After configuring the environment, you just need to run the following dbt command:
 
 ```
 $ dbt build --full-refresh --select +cota_parlamentar_by_state_party_date
 ```
+
+## Visualizing (looker studio)
+
+The table used to feed the dashboard was aggregated by `state`, `party` and `issue_date`, as you can observe in dbt queries.
+
+You can visualize the dashboard that was created navigating to [this link](https://lookerstudio.google.com/reporting/3b9bb23d-e4d6-4ce7-85a6-79611c327fc6).
+
+It also important to point that the dashboard created may not be accurate as it should, once this project was build focused to practice my Data Engineer skills specifically. The dashboard is likely a manner to show the outcome of the data pipeline itself, not the project's goal.
+
