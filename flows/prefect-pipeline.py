@@ -39,8 +39,9 @@ def load_into_bq(df: pd.DataFrame, table, gcs_block, project_id):
 @flow()
 def load_data():
     credentials_block_name = "gcs-credentials"
-    #check_connection_block(credentials_block_name)
-    for year in range(2009, 2018):
+    
+    # currently available years are:
+    for year in range(2013, 2018):
         print(f"Collecting and saving data from {year}")
         load_into_bq(gather_data(year), "cota_parlamentar_ds.cota_parlamentar_raw", credentials_block_name, "dtc-de-375519")
 

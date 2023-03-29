@@ -8,39 +8,75 @@ The project will cover following tools:
 - DBT
 - Google Compute Engine
 - Docker
+- Github Actions
+- Github Secrets
 
-Dataset used can be found [here](https://www2.camara.leg.br/transparencia/cota-para-exercicio-da-atividade-parlamentar/dados-abertos-cota-parlamentar). Prefect official Dockerfile [here](https://github.com/PrefectHQ/prefect/blob/main/Dockerfile)
+Dataset used on this project can be found [here](https://www2.camara.leg.br/transparencia/cota-para-exercicio-da-atividade-parlamentar/dados-abertos-cota-parlamentar). Prefect official Dockerfile [here](https://github.com/PrefectHQ/prefect/blob/main/Dockerfile)
 
 ## Architecture overview:
 ![Architecture overview](./assets/architecture_v1.png "Architecture overview - v.1")
 
 
 # Reproducing:
-In order to run prepare the environment for the pipelines that will be executed, you have to setup beforehand:   
-1. Github environment variables - will be used when running Actions (CD pipeline)
-2. Enable apis (TODO)
+In order to prepare the environment for the pipelines that will be executed, you have to setup beforehand:   
+1. Github environment variables. They are: `GCP_PROJECT_ID`, `GCP_SERVICE_ACCOUNT` and `PVT_SSH_KEY`. They will be used along the project for the tasks that require an authentication or so;
+2. Manually create a bucket named `terraform-tfstate-dtc-de-project`. This is where `tfstate` file will be stored;
 
 All prepared, now we can dive into pipelines settings.
 
 ## Prefect pipeline (collecting data)
 
-After infrastructure creation (will run Terraform code triggered by GitHub Actions), we have to (1) setup Git SSH key, (2) clone this repo, (3) run `docker compose up -d --build`, (4) create a block to store GCP Credentials, (5) create a bucket named `terraform-tfstate-dtc-de-project` to store tf state file, (6) define your `.env` file and navigate to `prefect orion` container.
+After running terraform `apply` for the very first time, you already have all infrastructure you need to run the pipelines, including partitioned and clustered BigQuery tables.
+Here are some lines you need to run to make prefect ready to use.
 
-After that, you must create, deploy and trigger a `prefect deployment` using the 3 commands below:
-- `first command`
-- `second command`
-- `third command`
-
-Then, just start a new `prefect agent` to collect and effective run the flow:   
+Navigate to project folder and create `.env` file there. Github repository is already cloned within VM if you informed your `PVT_SSH_KEY` correctly. Here is a template for `.env` file:
 ```
-$ prefect agent start -q 'default'
-``` 
+POSTGRES_DB="prefect_db"
+POSTGRES_USER="prefect-user"
+POSTGRES_PASSWORD="prefect-password"
+PREFECT_API_URL=http://172.17.0.1:4200/api
+DB_CONNECTION_URL="postgresql+asyncpg://prefect-user:prefect-password@postgres:5432/prefect_db"
+PROJECT_ID="your-gcp-project-id"
+```
 
-Done, all the data is already in BigTable. Now we need to run the cleaning process.
+Then:
+```
+$ docker compose up -d --build
+```
+
+Copy the following files to your `orion` container. Replace `<orion-container>` with the correct value:
+```
+export ORION_CONTAINER=<orion-container>
+docker cp ./flows/ $ORION_CONTAINER:/opt/prefect
+docker cp ~/default-sa.json $ORION_CONTAINER:/opt/prefect
+docker exec -it $ORION_CONTAINER /bin/bash
+```
+
+Register the GCP Credentials block in Prefect:
+```
+export JSON_CREDENTIALS=/opt/prefect/default-sa.json
+prefect block register -f ./flows/gcp-credentials-block.py
+```
+
+
+**You're done!!** You can run the prefect pipeline with the following commands:
+```
+prefect deployment build ./flows/prefect-pipeline.py:load_data -n "Load raw data from camara.leg.br to BigQuery dataset"
+prefect deployment apply ./load_data-deployment.yaml
+prefect deployment run "load-data/Load raw data from camara.leg.br to BigQuery dataset"
+prefect agent start -q 'default'
+```
+
+After some minutes you will see that the workload executed successfully. The output message will be something like this:
+```
+
+```
+
+Done, all the data is already in BigTable. Now we need to run the cleaning step.
 
 ## DBT pipeline (cleaning data)
 
-We are using dbt cloud. Said that, you must create your dbt cloud account, setup up a connection to BigQuery and configure github to sync this repo to dbt cloud. 
+We are using dbt cloud as data processing tool. Said that, you must previously create your dbt cloud account, setup up a connection to BigQuery and configure github to sync this repo with dbt cloud. 
 Also, don't forget configure a Project Subdirectory to reference `/dbt`, once it is **where the dbt files are located**.
 
 After configuring the environment, you just need to run the following dbt command:
@@ -48,6 +84,8 @@ After configuring the environment, you just need to run the following dbt comman
 ```
 $ dbt build --full-refresh --select +cota_parlamentar_by_state_party_date
 ```
+
+Done, all the clean and aggregated data is available to you in BigQuery.
 
 ## Visualizing (looker studio)
 
@@ -57,3 +95,5 @@ You can visualize the dashboard that was created navigating to [this link](https
 
 It also important to point that the dashboard created may not be accurate as it should, once this project was build focused to practice my Data Engineer skills specifically. The dashboard is likely a manner to show the outcome of the data pipeline itself, not the project's goal.
 
+Thank you for passing by,
+Eliton
