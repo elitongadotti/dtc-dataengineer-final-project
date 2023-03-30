@@ -17,7 +17,7 @@ def gather_data(year: int):
     filename = f"Ano-{year}.csv.zip"
     file_url = f"https://www.camara.leg.br/cotas/{filename}"
     print(f"Reading file {file_url}")
-    df = pd.read_csv(file_url, compression="zip", sep=";")
+    df = pd.read_csv(file_url, compression="zip", sep=";").fillna("")
     return df
 
 @task(log_prints=True)
