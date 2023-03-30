@@ -1,6 +1,6 @@
 # DataTalks.Club final project
 
-The project will cover following tools:
+This project will cover following topics:
 - Terraform
 - Prefect
 - Google BigQuery
@@ -11,7 +11,7 @@ The project will cover following tools:
 - Github Actions
 - Github Secrets
 
-Dataset used on this project can be found [here](https://www2.camara.leg.br/transparencia/cota-para-exercicio-da-atividade-parlamentar/dados-abertos-cota-parlamentar). Prefect official Dockerfile [here](https://github.com/PrefectHQ/prefect/blob/main/Dockerfile)
+The dataset that was used on this project can be found [here](https://www2.camara.leg.br/transparencia/cota-para-exercicio-da-atividade-parlamentar/dados-abertos-cota-parlamentar). Prefect official Dockerfile can be found [here](https://github.com/PrefectHQ/prefect/blob/main/Dockerfile)
 
 ## Architecture overview:
 ![Architecture overview](./assets/architecture_v1.png "Architecture overview - v.1")
@@ -29,7 +29,7 @@ All prepared, now we can dive into pipelines settings.
 After running terraform `apply` for the very first time, you already have all infrastructure you need to run the pipelines, including partitioned and clustered BigQuery tables.
 Here are some lines you need to run to make prefect ready to use.
 
-Navigate to project folder and create `.env` file there. Github repository is already cloned within VM if you informed your `PVT_SSH_KEY` correctly. Here is a template for `.env` file:
+Navigate to project folder and create `.env` file there. Github repository is already cloned within VM if you informed your `PVT_SSH_KEY` correctly. Here is a **template** for `.env` file:
 ```
 POSTGRES_DB="prefect_db"
 POSTGRES_USER="prefect-user"
@@ -72,14 +72,14 @@ After some minutes you will see that the workload executed successfully by the P
 20:04:53.395 | INFO    | prefect.infrastructure.process - Process 'fragrant-collie' exited cleanly.
 ```
 
-Done, all raw data is already in BigTable. Now we need to run the cleaning step.
+Done, all raw data is already in BigTable. Now we need to run cleaning steps.
 
 ## DBT pipeline (cleaning data)
 
 We are using dbt cloud as data processing tool. Said that, you must previously create your dbt cloud account, setup up a connection to BigQuery and configure github to sync this repo with dbt cloud. 
 Also, don't forget configure a Project Subdirectory to reference `/dbt`, once it is **where the dbt files are located**.
 
-After configuring the environment, you just need to run the following dbt command:
+After configuring the environment, you just need to run the following dbt command. This command will create new tables in BigQuery, the ones we are going to use as data source to our dashboard(s).
 
 ```
 $ dbt build --full-refresh --select +cota_parlamentar_by_state_party_date
@@ -93,7 +93,8 @@ The table used to feed the dashboard was aggregated by `state`, `party` and `iss
 
 You can visualize the dashboard that was created navigating to [this link](https://lookerstudio.google.com/reporting/3b9bb23d-e4d6-4ce7-85a6-79611c327fc6).
 
-It also important to point that the dashboard created may not be accurate as it should, once this project was build focused to practice my Data Engineer skills specifically. The dashboard is likely a manner to show the outcome of the data pipeline itself, not the project's goal.
+It also important to point that the dashboard created may not be accurate as it should, since this project was build focused to practice my Data Engineer skills specifically. The dashboard is likely a manner to show the outcome of the data pipeline itself, not the project's goal.
 
-Thank you for passing by,
+
+Thank you for the dedicated time in my project,   
 Eliton

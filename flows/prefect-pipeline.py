@@ -1,23 +1,18 @@
 from prefect import flow, task
 import pandas as pd
 from prefect_gcp import GcpCredentials
-import os
+import numpy as np
 
-
-# @task(log_prints=True)
-# def check_connection_block(block_name):
-#     block = GcpCredentials.load(block_name)
-#     if not block:
-#         print(f"Saving block name {block_name}")
-#         GcpCredentials(service_account_file=os.environ["JSON_CREDENTIALS"])\
-#             .save(block_name)
 
 @task(log_prints=True)
 def gather_data(year: int):
     filename = f"Ano-{year}.csv.zip"
     file_url = f"https://www.camara.leg.br/cotas/{filename}"
     print(f"Reading file {file_url}")
-    df = pd.read_csv(file_url, compression="zip", sep=";")
+    df = pd.read_csv(file_url, compression="zip", sep=";").astype(str).fillna("")
+    double_cols = ["vlrRestituicao", "vlrLiquido"]
+    df[double_cols] = df[double_cols].astype(np.double)
+
     return df
 
 @task(log_prints=True)
