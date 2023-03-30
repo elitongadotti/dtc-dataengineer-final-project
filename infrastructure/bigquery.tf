@@ -57,6 +57,10 @@ resource "google_bigquery_table" "cota_parlamentar_gold" {
     {
       "name": "bill_description",
       "type": "STRING"
+    },
+    {
+      "name": "id_parliamentarian",
+      "type": "INTEGER"
     }
   ]
   EOF
