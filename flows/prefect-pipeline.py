@@ -9,7 +9,7 @@ def gather_data(year: int):
     filename = f"Ano-{year}.csv.zip"
     file_url = f"https://www.camara.leg.br/cotas/{filename}"
     print(f"Reading file {file_url}")
-    df = pd.read_csv(file_url, compression="zip", sep=";").astype(str).fillna("")
+    df = pd.read_csv(file_url, compression="zip", sep=";").fillna("").astype(str)
     double_cols = ["vlrRestituicao", "vlrLiquido"]
     df[double_cols] = df[double_cols].astype(np.double)
 
