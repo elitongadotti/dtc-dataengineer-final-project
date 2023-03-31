@@ -1,7 +1,6 @@
 from prefect import flow, task
 import pandas as pd
 from prefect_gcp import GcpCredentials
-import numpy as np
 
 
 @task(log_prints=True)
@@ -9,11 +8,22 @@ def gather_data(year: int):
     filename = f"Ano-{year}.csv.zip"
     file_url = f"https://www.camara.leg.br/cotas/{filename}"
     print(f"Reading file {file_url}")
-    df = pd.read_csv(file_url, compression="zip", sep=";").fillna("").astype(str)
-    double_cols = ["vlrRestituicao", "vlrLiquido"]
-    df[double_cols] = df[double_cols].astype(np.double)
+    df = pd.read_csv(file_url, compression="zip", sep=";")
+    return df
+
+@task(log_prints=True)
+def select_cols(df: pd.DataFrame):
+    df = df[["cpf", "sgUF", "sgPartido", "txtDescricao", "datEmissao", "vlrLiquido", "vlrRestituicao"]]
+
+    str_cols = df.select_dtypes("object").columns
+    double_cols = df.select_dtypes(["float32", "float64"]).columns
+    
+    df[str_cols] = df[str_cols].fillna("")
+    df[double_cols] = df[double_cols].fillna(0)
+    df["cpf"] = df["cpf"].astype(int)
 
     return df
+
 
 @task(log_prints=True)
 def load_into_bq(df: pd.DataFrame, table, gcs_block, project_id):
@@ -38,6 +48,10 @@ def load_data():
     # currently available years are:
     for year in range(2013, 2018):
         print(f"Collecting and saving data from {year}")
-        load_into_bq(gather_data(year), "cota_parlamentar_ds.cota_parlamentar_raw", credentials_block_name, "dtc-de-375519")
+        load_into_bq(
+            select_cols(
+                gather_data(year)
+            ), "cota_parlamentar_ds.cota_parlamentar_raw", credentials_block_name, "dtc-de-375519"
+        )
 
     print("End of flow!")
