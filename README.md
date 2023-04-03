@@ -90,7 +90,7 @@ Also, don't forget configure a Project Subdirectory to reference `/dbt`, once it
 After configuring the environment, you just need to run the following dbt command. This command will create new tables in BigQuery, the ones we are going to use as data source to our dashboard(s).
 
 ```
-$ dbt build --select +cota_parlamentar_by_state_party_date
+$ dbt build --full-refresh --select +cota_parlamentar_by_state_party_date
 ```
 
 Done, all the clean and aggregated data is available to you in BigQuery.
