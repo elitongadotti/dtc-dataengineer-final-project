@@ -13,6 +13,9 @@ This project will cover following topics:
 
 The dataset that was used on this project can be found [here](https://www2.camara.leg.br/transparencia/cota-para-exercicio-da-atividade-parlamentar/dados-abertos-cota-parlamentar). Prefect official Dockerfile can be found [here](https://github.com/PrefectHQ/prefect/blob/main/Dockerfile)
 
+## Problem statement
+Brazil is a beautiful country, filled with countless forests, beaches, waterfalls, etc. Also a place with corruption, a lot of it! In all layers of society! The most dangerous and lethal are the ones in power (not a surprise, right?). This project aims to gather official data from parliamentary quota from years 2013 to 2017 and plot them in a manner that we (as taxes payers) can analyze and check how and by whom our money is spend.
+
 ## Architecture overview:
 ![Architecture overview](./assets/architecture_v1.png "Architecture overview - v.1")
 
