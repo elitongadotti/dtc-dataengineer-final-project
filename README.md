@@ -101,10 +101,14 @@ The table used to feed the dashboard was aggregated by `state`, `party` and `iss
 
 You can visualize the dashboard that was created navigating to [this link](https://lookerstudio.google.com/reporting/3b9bb23d-e4d6-4ce7-85a6-79611c327fc6).
 
-It also important to point that the dashboard created may not be accurate as it should, since this project was build focused to practice my Data Engineer skills specifically. The dashboard is likely a manner to show the outcome of the data pipeline itself, not the project's goal.
-
+A print screen of the final dashboard:
+![Parliamentary Financial Quota - Brazil (2013 - 2017)
+](./assets/parlamentary_quotas.jpg "Parliamentary Financial Quota - Brazil (2013 - 2017)")
 
 ---
+
+It also important to point that the dashboard created may not be accurate as it should, since this project was build focused to practice my Data Engineer skills specifically. The dashboard is likely a manner to show the outcome of the data pipeline itself, not the project's goal.
+
 
 Thank you for the dedicated time in my project,   
 Eliton
