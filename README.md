@@ -11,12 +11,17 @@ This project will cover following topics:
 - Github Actions
 - Github Secrets
 
-The dataset that was used on this project can be found [here](https://www2.camara.leg.br/transparencia/cota-para-exercicio-da-atividade-parlamentar/dados-abertos-cota-parlamentar). Prefect official Dockerfile can be found [here](https://github.com/PrefectHQ/prefect/blob/main/Dockerfile)
+## Useful links
+- Official zoomcamp repository from DataTalks.Club: [here](https://github.com/DataTalksClub/data-engineering-zoomcamp);   
+- Dataset that was used on this project can be found [here](https://www2.camara.leg.br/transparencia/cota-para-exercicio-da-atividade-parlamentar/dados-abertos-cota-parlamentar);   
+- Prefect official Dockerfile can be found [here](https://github.com/PrefectHQ/prefect/blob/main/Dockerfile);   
+- Review criteria for this project can be found [here](https://github.com/DataTalksClub/data-engineering-zoomcamp/blob/main/week_7_project/README.md#peer-review-criteria)
 
 ## Problem statement
 Brazil is a beautiful country, filled with countless forests, beaches, waterfalls, etc. Also a place with corruption, a lot of it! In all layers of society! The most dangerous and lethal are the ones in power (not a surprise, right?). This project aims to gather official data from parliamentary quota from years 2013 to 2017 and plot them in a manner that we (as taxes payers) can analyze and check how and by whom our money is spend.
 
-## Architecture overview:
+
+## Architecture overview (diagram):
 ![Architecture overview](./assets/architecture_v1.png "Architecture overview - v.1")
 
 
@@ -77,7 +82,7 @@ After some minutes you will see that the workload executed successfully by the P
 
 Done, all raw data is already in BigTable. Now we need to run cleaning steps.
 
-## DBT pipeline (cleaning data)
+## DBT Pipeline (Cleaning Data)
 
 We are using dbt cloud as data processing tool. Said that, you must previously create your dbt cloud account, setup up a connection to BigQuery and configure github to sync this repo with dbt cloud. 
 Also, don't forget configure a Project Subdirectory to reference `/dbt`, once it is **where the dbt files are located**.
@@ -90,7 +95,7 @@ $ dbt build --select +cota_parlamentar_by_state_party_date
 
 Done, all the clean and aggregated data is available to you in BigQuery.
 
-## Visualizing (looker studio)
+## Visualizing (Looker Studio)
 
 The table used to feed the dashboard was aggregated by `state`, `party` and `issue_date`, as you can observe in dbt queries.
 
@@ -98,6 +103,8 @@ You can visualize the dashboard that was created navigating to [this link](https
 
 It also important to point that the dashboard created may not be accurate as it should, since this project was build focused to practice my Data Engineer skills specifically. The dashboard is likely a manner to show the outcome of the data pipeline itself, not the project's goal.
 
+
+---
 
 Thank you for the dedicated time in my project,   
 Eliton
