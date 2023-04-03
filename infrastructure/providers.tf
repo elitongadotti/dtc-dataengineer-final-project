@@ -8,11 +8,11 @@ terraform {
   }
 
   backend "gcs" {
-    bucket = "terraform-tfstate-dtc-de-project"
+    bucket      = "terraform-tfstate-dtc-de-project"
   }
 }
 
 provider "google" {
-  project = var.project
-  zone    = local.zone
+  project     = var.project
+  zone        = local.zone
 }
