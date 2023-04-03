@@ -37,7 +37,7 @@ Host github.com
 " >> ~/.ssh/config
 
 chmod 600 ~/.ssh/ssh_key
-export GIT_URL=git@github.com:1eliton/dtc-de-project.git
+export GIT_URL=git@github.com:elitongadotti/dtc-dataengineer-final-project.git
 eval `ssh-agent` && ssh-add ~/.ssh/ssh_key
 cd ~ && git clone $GIT_URL && cd ./dtc-de-project
 # TODO: remove the line below
