@@ -1,4 +1,11 @@
-{{ config(materialized='table') }}
+{{ config(materialized='table',
+          partition_by={
+            "field": "issue_date",
+            "data_type": "datetime",
+            "granularity": "month"
+          }, 
+          cluster_by=["party", "state"]
+)}}
 
 select
     state,

@@ -7,7 +7,7 @@ sources:
 
     tables: 
       - name: cota_parlamentar_raw
-      - name: cota_parlamentar_gold
+      #- name: cota_parlamentar_gold
       
 
 models:
