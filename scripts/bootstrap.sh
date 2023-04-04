@@ -40,8 +40,6 @@ chmod 600 ~/.ssh/ssh_key
 export GIT_URL=git@github.com:elitongadotti/dtc-dataengineer-final-project.git
 eval `ssh-agent` && ssh-add ~/.ssh/ssh_key
 cd ~ && git clone $GIT_URL && cd ./dtc-de-project
-# TODO: remove the line below
-git checkout develop
 
 echo "Creating containers..."
 # TODO: touch .env file before run line below?
