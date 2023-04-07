@@ -1,6 +1,9 @@
 from prefect import flow, task
 import pandas as pd
 from prefect_gcp import GcpCredentials
+from google.cloud import storage
+from google.oauth2 import service_account
+import os
 
 
 @task(log_prints=True)
@@ -23,6 +26,14 @@ def select_cols(df: pd.DataFrame):
     df["cpf"] = df["cpf"].astype(int)
 
     return df
+
+
+@task(log_prints=True)
+def load_to_gcs(credentials_file_path: str, df: pd.DataFrame, bucket_name: str, blob_name: str):
+    credentials = service_account.Credentials.from_service_account_file(credentials_file_path)
+    bucket = storage.Client(credentials=credentials).bucket(bucket_name)
+    blob = bucket.blob(blob_name)
+    blob.upload_from_string(df.to_csv(), 'text/csv')
 
 
 @task(log_prints=True)

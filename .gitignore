@@ -132,3 +132,5 @@ dmypy.json
 infrastructure/.terraform/
 .terraform.**
 scripts/scripts.sh
+flows/test.py
+.vscode
