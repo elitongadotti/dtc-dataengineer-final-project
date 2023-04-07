@@ -29,9 +29,10 @@ def select_cols(df: pd.DataFrame):
 
 
 @task(log_prints=True)
-def load_to_gcs(credentials_file_path: str, df: pd.DataFrame, bucket_name: str, blob_name: str):
-    credentials = service_account.Credentials.from_service_account_file(credentials_file_path)
-    bucket = storage.Client(credentials=credentials).bucket(bucket_name)
+def load_to_gcs(gcs_block, df: pd.DataFrame, bucket_name: str, blob_name: str):
+    block = GcpCredentials.load(gcs_block)
+    bucket = storage.Client(credentials=block.get_credentials_from_service_account())\
+        .bucket(bucket_name)
     blob = bucket.blob(blob_name)
     blob.upload_from_string(df.to_csv(), 'text/csv')
 
@@ -39,6 +40,13 @@ def load_to_gcs(credentials_file_path: str, df: pd.DataFrame, bucket_name: str, 
 @task(log_prints=True)
 def load_into_bq(df: pd.DataFrame, table, gcs_block, project_id):
     block = GcpCredentials.load(gcs_block)
+    # bucket = storage.Client(credentials=block.get_credentials_from_service_account())\
+    #     .bucket(bucket_name)
+    # blob = bucket.blob(blob_name)
+    #f = blob.download_as_string()
+    #df = pd.read_csv(io.StringIO(f.decode("utf-8"), sep=","))
+
+    # blob.download_to_file()
     print("Loading data to BigQuery...")
     
     df.to_gbq(

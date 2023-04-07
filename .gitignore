@@ -134,3 +134,4 @@ infrastructure/.terraform/
 scripts/scripts.sh
 flows/test.py
 .vscode
+flows/json_credentials.json
